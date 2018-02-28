@@ -9,9 +9,9 @@ if [[ "$is_spotify" == "1" ]];then
  exec $browser "$1"
 else
  #echo "To spotify"
- spotify_running=$(ps aux | grep spotify | wc -l)
+ spotify_running=$(pgrep spotify | wc -l)
  # it was spotify
- if [[ $spotify_running -eq 1 ]]; then
+ if [[ $spotify_running -lt 1 ]]; then
   # is not running
   #echo "Was not running, calling with $1"
   spotify --uri="$1"

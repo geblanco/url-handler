@@ -1,22 +1,22 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 is_spotify=$(echo "$1" | perl -ne '(/^(?:https|http):\/\/open\.spotify\.com\/((?:[^\\\?])*)(?:.*)?$/ && print $1) || print "1"')
 
 if [[ "$is_spotify" == "1" ]];then
- browser=$(grep '^Browser' /usr/share/applications/url-handler.desktop | tail -n 1 | sed 's/^Browser=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
+ browser=$(grep '^X-Browser' /usr/share/applications/url-handler.desktop | tail -n 1 | sed 's/^X-Browser=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
  browser=$(grep '^Exec' /usr/share/applications/$browser | head -n 1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
- # echo "To the browser $1"
+ echo "To the browser ${browser} ${1}" >> $HOME/.config/url-log
  exec $browser "$1"
 else
- #echo "To spotify"
+ # echo "To spotify" >> $HOME/.config/url-log
  spotify_running=$(pgrep spotify | wc -l)
  # it was spotify
  if [[ $spotify_running -lt 1 ]]; then
   # is not running
-  #echo "Was not running, calling with $1"
+  # echo "Was not running, calling with $1" >> $HOME/.config/url-log
   spotify --uri="$1"
  else
-  #echo "Was open, calling dbus with $is_spotify"
+  # echo "Was open, calling dbus with $is_spotify" >> $HOME/.config/url-log
   qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri spotify:"$is_spotify"
  fi
 fi

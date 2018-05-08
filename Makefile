@@ -19,8 +19,9 @@ all:
 install:
 	$(INSTALL) -m0644 -D src/url-handler.desktop $(PATH_EXEC_DESKTOP)
 	$(INSTALL) -m0755 -D src/url-handler $(PATH_EXEC)
-	@echo -e "You should run: \n  'xdg-mime default url-handler.desktop x-scheme-handler/http'\n  'xdg-mime default url-handler.desktop x-scheme-handler/https'"
-	@echo -e "And probably: \n  'xdg-settings set default-url-scheme-handler http url-handler.desktop'"
+	xdg-mime default url-handler.desktop x-scheme-handler/http
+	xdg-mime default url-handler.desktop x-scheme-handler/https
+	# xdg-settings set default-url-scheme-handler http url-handler.desktop
 
 uninstall:
 	rm -f $(PATH_EXEC)

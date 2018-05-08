@@ -1,11 +1,9 @@
 [Desktop Entry]
-Version=0.1
-Encoding=UTF-8
 Name=Url Handler
-Comment=Url Handler
-Categories=Productivity;Utility;
+Comment=A Utility to properly handle urls with spotify and the browser
+Categories=Utility;
 Exec=/usr/bin/url-handler %u
-Terminal=true
+Terminal=false
 Type=Application
 MimeType=x-scheme-handler/http;x-scheme-handler/https;
-Browser=firefox.desktop
+X-Browser=firefox.desktop
